@@ -1,0 +1,4 @@
+{
+    "mongoURI": "mongodb+srv://finance-app-db:chitown!_!@cluster0.4d91j.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
+}
+  
