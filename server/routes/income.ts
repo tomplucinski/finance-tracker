@@ -1,12 +1,11 @@
-const express = require('express');
+import express, { Request, Response } from 'express';
 const router = express.Router();
 const Income = require('../models/Income');
 
 // @route   GET api/income
 // @desc    Get all income
-router.get('/', async (req, res) => {
+router.get('/', async (req: Request, res: Response) => {
     try {
-        const expenses = await Expense.find();
         res.json('Here is all your tracked income!');
     } catch(e) {
         console.error(e);
