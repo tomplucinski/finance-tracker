@@ -5,6 +5,9 @@
   "main": "index.js",
   "scripts": {
     "start": "node server/index.js",
+    "client": "npm start --prefix client",
+    "server": "nodemon server",
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
     "build": "cd client && npm install && npm run build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -18,5 +21,9 @@
     "config": "^3.3.6",
     "express": "^4.17.1",
     "mongoose": "^5.12.12"
+  },
+  "devDependencies": {
+    "concurrently": "^6.2.0",
+    "nodemon": "^2.0.9"
   }
 }
