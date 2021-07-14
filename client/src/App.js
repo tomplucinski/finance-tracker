@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { VictoryBar, VictoryChart, VictoryAxis } from 'victory';
 import Modal from 'react-modal';
-import ExpenseForm from './ExpenseForm';
+import SubmissionForm from './SubmissionForm';
 import './App.css';
 
 const customStyles = {
@@ -18,8 +18,10 @@ const customStyles = {
 
 Modal.setAppElement('#root');
 
-function App() {
+const App = () => {
   const [data, setData] = useState(null);
+  const [clickedButton, setClickedButton] = useState(null);
+  const [modalIsOpen, setIsOpen] = useState(false);
 
   const mockData = [
     {quarter: 1, earnings: 13000},
@@ -27,14 +29,15 @@ function App() {
     {quarter: 3, earnings: 14250},
     {quarter: 4, earnings: 19000}
   ];
-
-  const [modalIsOpen, setIsOpen] = useState(false);
-
-  function openModal() {
+  
+  const openModal = (e) => {
+    const text = e.target.innerHTML.slice(4).toLowerCase();
+    setClickedButton(text);
     setIsOpen(true);
   }
 
-  function closeModal() {
+  const closeModal = () => {
+    setClickedButton(null);
     setIsOpen(false);
   }
 
@@ -56,8 +59,7 @@ function App() {
           style={customStyles}
           contentLabel="Example Modal"
         >
-          <ExpenseForm closeModal={closeModal}/>
-          {/* <button onClick={closeModal}>close</button> */}
+          <SubmissionForm closeModal={closeModal} route={clickedButton}/>
         </Modal>
         <VictoryChart
           domainPadding={20}
