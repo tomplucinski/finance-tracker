@@ -6,7 +6,6 @@ const Expense = require('../models/Expense')
 // @desc    Get all expenses
 router.get('/', async (req, res) => {
     try {
-        const expenses = await Expense.find()
         res.json('Here are all your tracked expenses!')
     } catch(e) {
         console.error(e);
@@ -14,10 +13,14 @@ router.get('/', async (req, res) => {
     }
 })
 
+// @route   POST api/expenses
+// @desc    Add an expense
 router.post('/', async (req, res) => {
     try {
-        console.log(req.body)
-        res.status(200).send('Success!')
+        const { amount, month, year } = req.body
+        const newExpense = new Expense({ amount, month, year })
+        const expense = await newExpense.save()
+        res.json(expense)
     } catch (e) {
         console.error(e);
         res.status(500).send('Server error')
