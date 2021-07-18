@@ -18,8 +18,8 @@ router.get('/', async (req, res) => {
 router.post('/', async (req, res) => {
     try {
         console.log(req.body)
-        const { amount, date } = req.body
-        const newExpense = new Expense({ amount, date })
+        const { amount, month, year } = req.body
+        const newExpense = new Expense({ amount, month, year })
         const expense = await newExpense.save()
         res.json(expense)
     } catch (e) {

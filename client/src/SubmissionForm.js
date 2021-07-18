@@ -1,19 +1,32 @@
-import React, { useState } from "react";
-import DatePicker from "react-datepicker";
-import axios from 'axios';
-import "react-datepicker/dist/react-datepicker.css";
+import React, { useState } from "react"
+import axios from 'axios'
+import { months } from "./constants"
 
 const SubmissionForm = ({closeModal, route}) => {
-    const [formData, setFormData] = useState({amount: 0, date: new Date()});
-    const { amount, date } = formData;
+    const [formData, setFormData] = useState({amount: 0, month: '', year: 0})
+    const { amount, month, year } = formData
 
-    const handleChange = (e) => setFormData({...formData, [e.target.name]: e.target.value});
+    const generateYears = () => {
+        let year =  new Date().getFullYear()
+        const years = []
+        years.push(year)
+        for (let i = 0; i < 30; i++) {
+            year--;
+            years.push(year);
+        }
+        return years
+    }
+
+    const handleChange = (e) => {
+        console.log(e.target.value)
+        setFormData({...formData, [e.target.name]: e.target.value})
+    }
 
     const handleSubmit = (e) => {
-        e.preventDefault();
-        sendData(formData);
-        closeModal();
-    };
+        e.preventDefault()
+        sendData(formData)
+        closeModal()
+    }
 
     const sendData = (data) => {
         try {
@@ -21,12 +34,12 @@ const SubmissionForm = ({closeModal, route}) => {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-            };
-            axios.post(`/api/${route}`, data, config);
+            }
+            axios.post(`/api/${route}`, data, config)
         } catch (e) {
-            console.log('Error sending data', e);
+            console.log('Error sending data', e)
         }
-    };
+    }
 
     return (
         <form onSubmit={e => handleSubmit(e)}>
@@ -34,11 +47,26 @@ const SubmissionForm = ({closeModal, route}) => {
                 Amount:
                 <input type="text" name="amount" value={amount} onChange={e => handleChange(e)} />
             </label>
-            <DatePicker selected={date} onChange={(date) => setFormData({...formData, date})} />
+            <select name="month" id="month" onChange={e => handleChange(e)}>
+                <option defaultValue disabled selected>Month</option>
+                {months.map((month, i) => {
+                    return (
+                        <option key={i} value={month}>{month}</option>
+                    )
+                })}
+            </select>
+            <select name="year" id="year" onChange={e => handleChange(e)}>
+                <option defaultValue disabled selected>Year</option>
+                {generateYears().map((year, i) => {
+                    return (
+                        <option key={i} value={year}>{year}</option>
+                    )
+                })}
+            </select>
             <button onClick={closeModal}>close</button>
             <input type="submit" value="Submit" />
       </form>
-    );
-};
+    )
+}
 
-export default SubmissionForm;
+export default SubmissionForm
