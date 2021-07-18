@@ -17,7 +17,6 @@ router.get('/', async (req, res) => {
 // @desc    Add an expense
 router.post('/', async (req, res) => {
     try {
-        console.log(req.body)
         const { amount, month, year } = req.body
         const newExpense = new Expense({ amount, month, year })
         const expense = await newExpense.save()

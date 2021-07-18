@@ -17,10 +17,13 @@ router.get('/', async (req, res) => {
 // @desc    Add income
 router.post('/', async (req, res) => {
     try {
-        res.json('Here is all your tracked income!');
-    } catch(e) {
+        const { amount, month, year } = req.body
+        const newIncome = new Income({ amount, month, year })
+        const income = await newIncome.save()
+        res.json(income)
+    } catch (e) {
         console.error(e);
-        res.status(500).send('Server error');
+        res.status(500).send('Server error')
     }
 });
 
