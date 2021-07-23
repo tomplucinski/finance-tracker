@@ -18,7 +18,6 @@ const SubmissionForm = ({closeModal, route}) => {
     }
 
     const handleChange = (e) => {
-        console.log(e.target.value)
         setFormData({...formData, [e.target.name]: e.target.value})
     }
 
@@ -29,13 +28,22 @@ const SubmissionForm = ({closeModal, route}) => {
     }
 
     const sendData = (data) => {
+        let { amount, month, year } = data
+        
+        // validate null values
+        amount = parseInt(amount)
+        month = month.toString()
+        year = parseInt(year)
+
+        const body = { amount, month, year }
+
         try {
             const config = {
                 headers: {
                     'Content-Type': 'application/json',
                 },
             }
-            axios.post(`/api/${route}`, data, config)
+            axios.post(`/api/${route}`, body, config)
         } catch (e) {
             console.log('Error sending data', e)
         }

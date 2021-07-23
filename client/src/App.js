@@ -4,6 +4,7 @@ import Modal from 'react-modal'
 import SubmissionForm from './SubmissionForm'
 import axios from 'axios'
 import './App.css'
+import { months } from './constants'
 
 const customStyles = {
   content: {
@@ -53,7 +54,7 @@ const App = () => {
 
   console.log(data)
 
-  return (
+  return data && (
     <div className="App">
       <header className="App-header">
         <h1>Finance Tracker</h1>
@@ -69,17 +70,17 @@ const App = () => {
           domainPadding={20}
         >
           <VictoryAxis
-          tickValues={[1, 2, 3, 4]}
-          tickFormat={["Quarter 1", "Quarter 2", "Quarter 3", "Quarter 4"]}
+          tickValues={[1, 2, 3, 4, 5, 6]}
+          tickFormat={[...months]}
           />
           <VictoryAxis
             dependentAxis
             tickFormat={(x) => (`$${x / 1000}k`)}
           />
           <VictoryBar
-            data={mockData}
-            x="quarter"
-            y="earnings"
+            data={data}
+            x="month"
+            y="incomeAmount"
           />
         </VictoryChart>
         <button onClick={openModal}>Add Expense</button>

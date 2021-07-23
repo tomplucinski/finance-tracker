@@ -1,6 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const Income = require('../models/Income')
+const { validateFields } = require('../helpers')
 
 // @route   GET api/income
 // @desc    Get all income
@@ -19,8 +20,9 @@ router.get('/', async (req, res) => {
 // @desc    Add income
 router.post('/', async (req, res) => {
     try {
+        validateFields(req.body)
         const { amount, month, year } = req.body
-        const newIncome = new Income({ amount, month, year })
+        const newIncome = new Income({ incomeAmount: amount, month, year })
         const income = await newIncome.save()
         res.json(income)
     } catch (e) {

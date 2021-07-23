@@ -6,9 +6,9 @@ const IncomeSchema = new Schema({
         type: String
     },
     year: {
-        type: String
+        type: Number
     },
-    amount: {
+    incomeAmount: {
         type: Number
     }
 });
