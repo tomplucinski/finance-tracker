@@ -9,7 +9,8 @@
     "server": "nodemon server",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
     "build": "cd client && npm install && npm run build",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest",
+    "test:watch": "jest --watch"
   },
   "engines": {
     "node": "14.16.1"
@@ -27,6 +28,8 @@
   },
   "devDependencies": {
     "concurrently": "^6.2.0",
-    "nodemon": "^2.0.9"
+    "jest": "^27.0.6",
+    "nodemon": "^2.0.9",
+    "supertest": "^6.1.6"
   }
 }
