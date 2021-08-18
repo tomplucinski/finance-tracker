@@ -22,6 +22,8 @@ router.post('/', async (req, res) => {
     try {
         validateFields(req.body)
         const { amount, month, year } = req.body
+        const duplicate = await Income.findOne({ incomeAmount: amount, month, year });
+        console.log('Duplicate', duplicate);
         const newIncome = new Income({ incomeAmount: amount, month, year })
         const income = await newIncome.save()
         res.json(income)
